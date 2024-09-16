@@ -1,8 +1,12 @@
-# React + Vite
+# BitCode Task 2 - Bit Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Live at [https://66e83fd5caa3970830b6300b--benevolent-khapse-7fd27d.netlify.app/]
 
-Currently, two official plugins are available:
+## How to run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Clone the repo
+2. Run `npm install` to install dependencies
+3. Run `npm run dev` to start the development application
+4. Open your browser and navigate to `http://localhost:5173/`
+
+# API - [https://bit-store-roan.vercel.app/api/v1/]
