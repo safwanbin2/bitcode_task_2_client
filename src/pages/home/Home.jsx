@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import Table from "../../components/ui/table/Table";
 import { useState } from "react";
 import axios from "axios";
@@ -9,6 +8,7 @@ const Home = () => {
   const [data, setData] = useState([]);
 
   const handleGenerateReport = async () => {
+    setData([]);
     setLoading(true);
     try {
       const response = await axios.get(
@@ -27,11 +27,17 @@ const Home = () => {
   return (
     <div className="w-full min-h-screen flex justify-center items-center bg-black">
       <div className="w-11/12 md:w-10/12 py-10 mx-auto h-full flex justify-center items-center flex-col gap-5">
-        {data?.success && data?.data?.purchases?.length ? (
-          <Table {...data} />
-        ) : (
-          ""
-        )}
+        <div
+          className={`w-full opacity-0 transition-opacity duration-1000 ${
+            data?.success && data?.data?.purchases?.length ? "opacity-100" : ""
+          }`}
+        >
+          {data?.success && data?.data?.purchases?.length ? (
+            <Table {...data} />
+          ) : (
+            ""
+          )}
+        </div>
 
         <div className="flex justify-center items-center gap-2">
           {loading ? (
