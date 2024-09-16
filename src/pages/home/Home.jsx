@@ -5,28 +5,23 @@ import axios from "axios";
 import { toast } from "sonner";
 
 const Home = () => {
-  const [enabled, setEnabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
 
-  const fetchData = async () => {
-    const response = await axios.get(
-      "https://bit-store-roan.vercel.app/api/v1/report/generate"
-    );
-    setEnabled(false);
-    toast.success(response?.data?.message);
-    return response.data;
-  };
-
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ["fetchData"],
-    queryFn: fetchData,
-    enabled,
-  });
-
-  const handleGenerateReport = () => {
-    if (enabled) {
-      refetch();
+  const handleGenerateReport = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        "https://bit-store-roan.vercel.app/api/v1/report/generate"
+      );
+      setData(response.data);
+      toast.success(response?.data?.message);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      toast.error(data?.message);
+      console.log(error);
     }
-    setEnabled(true);
   };
 
   return (
@@ -39,27 +34,23 @@ const Home = () => {
         )}
 
         <div className="flex justify-center items-center gap-2">
-          {isLoading ? (
+          {loading ? (
             <button
+              type="button"
               disabled
-              className="bg-black text-white px-5 py-2 rounded-full text-base font-normal tracking-wide border-white border transition-all duration-200"
+              className="bg-black text-white px-5 py-2 rounded-full text-base font-normal tracking-wide border-white border transition-all duration-200 flex items-center "
             >
+              <div className="animate-spin h-5 w-5 mr-3 border border-white border-s-black rounded-full"></div>
               Generating...
             </button>
           ) : (
             <button
+              type="button"
               onClick={handleGenerateReport}
               className="bg-black text-white px-5 py-2 rounded-full text-base font-normal tracking-wide border-white border hover:text-black hover:bg-white hover:border-black transition-all duration-200"
             >
               Generate Report
             </button>
-          )}
-          {data?.data?.purchases?.length ? (
-            <button className="bg-black text-white px-5 py-2 rounded-full text-base font-normal tracking-wide border-white border hover:text-black hover:bg-white hover:border-black transition-all duration-200">
-              Download Report
-            </button>
-          ) : (
-            ""
           )}
         </div>
       </div>
